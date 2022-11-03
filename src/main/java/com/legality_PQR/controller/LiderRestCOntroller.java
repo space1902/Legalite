@@ -2,6 +2,7 @@ package com.legality_PQR.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import com.legality_PQR.response.ClienteResponseRest;
 import com.legality_PQR.response.LiderResponseRest;
 import com.legality_PQR.services.ILiderService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/legality/")
 public class LiderRestCOntroller {

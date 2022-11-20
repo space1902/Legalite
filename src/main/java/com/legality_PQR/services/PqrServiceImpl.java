@@ -1,6 +1,5 @@
 package com.legality_PQR.services;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -265,6 +264,54 @@ public class PqrServiceImpl implements IPqrService{
 		} catch (Exception e) {
 			// TODO: handle exception
 			response.setMetadata("Respuesta no ok", "-1", "Error al actualizar estado");
+			e.getStackTrace();
+			return new ResponseEntity<PqrResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<PqrResponseRest>(response, HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<PqrResponseRest> updatePqr(Pqr pqr, Long id ) {
+
+		PqrResponseRest response = new PqrResponseRest();
+		List<Pqr> list = new ArrayList<>();
+
+		try {
+
+			Optional<Pqr> searchId = pqrDao.findById(id);
+
+			if(searchId.isPresent()) {
+
+				searchId.get().setAsunto(pqr.getAsunto());
+				searchId.get().setCliente(pqr.getCliente());
+				searchId.get().setIdCliente(pqr.getIdCliente());
+				searchId.get().setDescripcion(pqr.getDescripcion());
+
+				Pqr pqrSaved = pqrDao.save(searchId.get());
+
+				if(pqrSaved != null) {
+
+					list.add(pqrSaved);
+					response.getPqrResponse().setPqr(list);
+					response.setMetadata("Respuesta ok", "00", "Cliente actualizado");
+
+				}else {
+
+					response.setMetadata("Respuesta no ok", "-1", "Cliente no actualizado");
+					return new ResponseEntity<PqrResponseRest>(response, HttpStatus.BAD_REQUEST);
+				}
+
+			}else {
+
+				response.setMetadata("Respuesta no ok", "-1", "Cliente no encontrado");
+				return new ResponseEntity<PqrResponseRest>(response, HttpStatus.NOT_FOUND);
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta no ok", "-1", "Error al actualizar cliente");
 			e.getStackTrace();
 			return new ResponseEntity<PqrResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

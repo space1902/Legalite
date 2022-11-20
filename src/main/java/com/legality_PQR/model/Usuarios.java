@@ -1,6 +1,7 @@
 package com.legality_PQR.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +14,9 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "lider")
-public class Lider implements Serializable{
-	
+@Table(name = "usuarios")
+public class Usuarios {
+
 
 	/**
 	 * 
@@ -24,12 +25,16 @@ public class Lider implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_lider")
-	private Long idLider;
+	@Column(name="id_user")
+	private Long idUser;
+	
+	@Column(name="nit")
+	private String nit;
 	private String nombre;
-	private String grupo;
-	private String correo;
-	private int cargo;
+	private Integer tipo_usuario;
 	private String contraseña;
-
+	private String correo;
+	private String cargo;
+	private String direccion;
+	private Integer grupo;
 }

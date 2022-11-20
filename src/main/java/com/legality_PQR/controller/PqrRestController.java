@@ -60,6 +60,14 @@ public class PqrRestController {
 		return response;
 	}
 	
+	@PutMapping("updatepqr/{id}")
+	public ResponseEntity<PqrResponseRest> updatePqr(@RequestBody Pqr pqr, @PathVariable Long id){
+
+		ResponseEntity<PqrResponseRest> response = pqrService.updatePqr(pqr, id);
+		
+		return response;
+	}
+	
 	@PostMapping("createpqr/")
 	public ResponseEntity<PqrResponseRest> createPqr(@RequestBody Pqr pqr){
 

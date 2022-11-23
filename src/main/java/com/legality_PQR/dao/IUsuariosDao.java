@@ -14,14 +14,14 @@ public interface IUsuariosDao extends JpaRepository<Usuarios, Long>{
 	@Query(
 			value =" select count(*)"
 					+ "	from usuarios "
-					+ "	where contraseña = :email	",
+					+ "	where correo = :email	",
 			nativeQuery = true)
 	Integer validateEmail(@Param("email") String email);
 	
 	@Query(
 			value =" select count(*)"
 					+ "	from usuarios "
-					+ "	where correo = :password	",
+					+ "	where contraseña = :password	",
 			nativeQuery = true)
 	Integer validatePassword(@Param("password") String password);
 	
@@ -45,5 +45,12 @@ public interface IUsuariosDao extends JpaRepository<Usuarios, Long>{
 					+ "	where cargo = :cargo	",
 			nativeQuery = true)
 	List<Usuarios>  getAsesor(@Param("cargo") Long cargo);
+
+	@Query(
+			value =" select *"
+					+ "	from usuarios "
+					+ "	where id_user = :id	",
+			nativeQuery = true)
+	List<Usuarios>  getUsuario(@Param("id") Long id);
 
 }

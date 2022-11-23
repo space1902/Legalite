@@ -92,7 +92,6 @@ public class UsuariosServiceImpl implements IUsuariosService{
 				searchId.get().setGrupo(usuarios.getGrupo());
 				searchId.get().setNombre(usuarios.getNombre());
 				searchId.get().setNit(usuarios.getNit());
-				searchId.get().setTipo_usuario(usuarios.getTipo_usuario());
 				searchId.get().setContraseña(usuarios.getContraseña());
 				searchId.get().setCargo(usuarios.getCargo());
 				searchId.get().setDireccion(usuarios.getDireccion());
@@ -139,10 +138,12 @@ public class UsuariosServiceImpl implements IUsuariosService{
 		try {
 
 			Optional<Usuarios> searchId = usuarioDao.findById(id);
+			List<Usuarios> prueba = usuarioDao.getUsuario(id);
 
 			if(searchId.isPresent()) {
 
 
+				searchId.get().setContraseña(prueba.get(0).getContraseña());
 				searchId.get().setCorreo(usuarios.getCorreo());
 				searchId.get().setNombre(usuarios.getNombre());
 				searchId.get().setDireccion(usuarios.getDireccion());

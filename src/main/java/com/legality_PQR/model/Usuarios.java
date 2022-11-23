@@ -31,10 +31,9 @@ public class Usuarios {
 	@Column(name="nit")
 	private String nit;
 	private String nombre;
-	private Integer tipo_usuario;
 	private String contraseña;
 	private String correo;
-	private String cargo;
+	private Integer cargo;
 	private String direccion;
 	private Integer grupo;
 }

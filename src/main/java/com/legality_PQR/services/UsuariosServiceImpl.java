@@ -143,7 +143,6 @@ public class UsuariosServiceImpl implements IUsuariosService{
 			if(searchId.isPresent()) {
 
 
-				searchId.get().setContraseña(prueba.get(0).getContraseña());
 				searchId.get().setCorreo(usuarios.getCorreo());
 				searchId.get().setNombre(usuarios.getNombre());
 				searchId.get().setDireccion(usuarios.getDireccion());
@@ -232,22 +231,22 @@ public class UsuariosServiceImpl implements IUsuariosService{
 	}
 
 	@Override
-	public ResponseEntity<UsuariosResponseRest> updateMyPassword(Long id, String email, String password, String newpassword) {
+	public ResponseEntity<UsuariosResponseRest> updateMyPassword(Long id,  Usuarios usuarios) {
 		
 
 		UsuariosResponseRest response = new UsuariosResponseRest();
 		List<Usuarios> list = new ArrayList<>();
-
 		try {
 
 			Optional<Usuarios> searchId = usuarioDao.findById(id);
-			Integer validateEm = usuarioDao.validateEmail(email);
-			Integer validatePass = usuarioDao.validatePassword(password);
+			Integer validateEm = usuarioDao.validateEmail(usuarios.getCorreo());
+			Integer validatePass = usuarioDao.validatePassword(usuarios.getContraseña());
 
 			if(searchId.isPresent() && validateEm == 1 && validatePass == 1) {
 
+				System.out.println("ver lo que llega" + usuarios.getNuevacontraseña()); 
 
-				searchId.get().setContraseña(newpassword);
+				searchId.get().setContraseña(usuarios.getNuevacontraseña());
 
 				Usuarios usuarioSaved = usuarioDao.save(searchId.get());
 
@@ -281,57 +280,13 @@ public class UsuariosServiceImpl implements IUsuariosService{
 	}
 
 	@Override
-	public ResponseEntity<UsuariosResponseRest> getAsesor(Long cargo) {
+	public ResponseEntity<UsuariosResponseRest> getCargo(Long cargo) {
 
 		UsuariosResponseRest response = new UsuariosResponseRest();
 
 		try {
 
-			List<Usuarios> usuarios = (List<Usuarios>) usuarioDao.getAsesor(cargo);
-
-			response.getUsuarioResponse().setUsuarios(usuarios);
-			response.setMetadata("Respuesta ok", "00", "Respuesta exitosa");
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			response.setMetadata("Respuesta no ok", "-1", "Respuesta no exitosa");
-			e.getStackTrace();
-			return new ResponseEntity<UsuariosResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-		return new ResponseEntity<UsuariosResponseRest>(response, HttpStatus.OK);
-	}
-
-	@Override
-	public ResponseEntity<UsuariosResponseRest> getAdmin(Long cargo) {
-
-		UsuariosResponseRest response = new UsuariosResponseRest();
-
-		try {
-
-			List<Usuarios> usuarios = (List<Usuarios>) usuarioDao.getAdmin(cargo);
-
-			response.getUsuarioResponse().setUsuarios(usuarios);
-			response.setMetadata("Respuesta ok", "00", "Respuesta exitosa");
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			response.setMetadata("Respuesta no ok", "-1", "Respuesta no exitosa");
-			e.getStackTrace();
-			return new ResponseEntity<UsuariosResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-		return new ResponseEntity<UsuariosResponseRest>(response, HttpStatus.OK);
-	}
-
-	@Override
-	public ResponseEntity<UsuariosResponseRest> getClient(Long cargo) {
-
-		UsuariosResponseRest response = new UsuariosResponseRest();
-
-		try {
-
-			List<Usuarios> usuarios = (List<Usuarios>) usuarioDao.getClient(cargo);
+			List<Usuarios> usuarios = (List<Usuarios>) usuarioDao.getCargo(cargo);
 
 			response.getUsuarioResponse().setUsuarios(usuarios);
 			response.setMetadata("Respuesta ok", "00", "Respuesta exitosa");

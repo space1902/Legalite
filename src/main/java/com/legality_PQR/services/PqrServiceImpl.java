@@ -135,9 +135,6 @@ public class PqrServiceImpl implements IPqrService{
 
 			if(searchId.isPresent()) {
 
-
-				List<Pqr> pqr = (List<Pqr>) pqrDao.findAll();
-
 				searchId.get().setEstado(status);
 
 				Pqr pqrIdAsesorUrgencia = pqrDao.save(searchId.get());

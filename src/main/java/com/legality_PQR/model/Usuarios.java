@@ -32,6 +32,7 @@ public class Usuarios {
 	private String nit;
 	private String nombre;
 	private String contraseña;
+	private String nuevacontraseña;
 	private String correo;
 	private Integer cargo;
 	private String direccion;

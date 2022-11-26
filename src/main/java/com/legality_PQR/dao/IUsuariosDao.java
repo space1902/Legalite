@@ -30,21 +30,7 @@ public interface IUsuariosDao extends JpaRepository<Usuarios, Long>{
 					+ "	from usuarios "
 					+ "	where cargo = :cargo	",
 			nativeQuery = true)
-	List<Usuarios> getClient(@Param("cargo") Long cargo);
-	
-	@Query(
-			value =" select *"
-					+ "	from usuarios "
-					+ "	where cargo = :cargo	",
-			nativeQuery = true)
-	List<Usuarios>  getAdmin(@Param("cargo") Long cargo);
-	
-	@Query(
-			value =" select *"
-					+ "	from usuarios "
-					+ "	where cargo = :cargo	",
-			nativeQuery = true)
-	List<Usuarios>  getAsesor(@Param("cargo") Long cargo);
+	List<Usuarios>  getCargo(@Param("cargo") Long cargo);
 
 	@Query(
 			value =" select *"

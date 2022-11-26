@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.legality_PQR.model.Usuarios;
@@ -53,16 +55,16 @@ public class UsuariosRestController {
 	@PutMapping("updatemyuser/{id}")
 	public ResponseEntity<UsuariosResponseRest> updateMyUsuario(@PathVariable Long id, @RequestBody Usuarios usuarios){
 
-		ResponseEntity<UsuariosResponseRest> response = usuariosService.updateUsuario(id, usuarios);
+		ResponseEntity<UsuariosResponseRest> response = usuariosService.updateMyUsuario(id, usuarios);
 
 		return response;
 
 	}
 
 	@PutMapping("updatemypassword/{id}")
-	public ResponseEntity<UsuariosResponseRest> updateMyPassword(@PathVariable Long id, String email, String password, String newpassword){
+	public ResponseEntity<UsuariosResponseRest> updateMyPassword(@PathVariable Long id,@RequestBody Usuarios usuarios){
 
-		ResponseEntity<UsuariosResponseRest> response = usuariosService.updateMyPassword(id, email, password, newpassword);
+		ResponseEntity<UsuariosResponseRest> response = usuariosService.updateMyPassword(id, usuarios);
 
 		return response;
 
@@ -84,29 +86,12 @@ public class UsuariosRestController {
 		return response;
 	}
 
-	@GetMapping("searchcliente/{cargo}")
+	@GetMapping("searchcargo/{cargo}")
 	public ResponseEntity<UsuariosResponseRest> getClient(@PathVariable Long cargo){
 
-		ResponseEntity<UsuariosResponseRest> response = usuariosService.getClient(cargo);
+		ResponseEntity<UsuariosResponseRest> response = usuariosService.getCargo(cargo);
 
 		return response;
-	}
-
-	@GetMapping("searchadmin/{cargo}")
-	public ResponseEntity<UsuariosResponseRest> getAdmin(@PathVariable Long cargo){
-
-		ResponseEntity<UsuariosResponseRest> response = usuariosService.getAdmin(cargo);
-
-		return response;
-	}
-
-	@GetMapping("searchasesor/{cargo}")
-	public ResponseEntity<UsuariosResponseRest> getAsesor(@PathVariable Long cargo){
-
-		ResponseEntity<UsuariosResponseRest> response = usuariosService.getAsesor(cargo);
-
-		return response;
-	}
-
+	}	
 
 }

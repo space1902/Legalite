@@ -94,4 +94,12 @@ public class UsuariosRestController {
 		return response;
 	}	
 
+	@GetMapping("validarusuario/{correo}/{contraseña}")
+	public ResponseEntity<UsuariosResponseRest> getValidarUsuario(@PathVariable String correo,@PathVariable String contraseña ){
+
+		ResponseEntity<UsuariosResponseRest> response = usuariosService.getValidarUsuario(correo, contraseña);
+
+		return response;
+	}	
+
 }

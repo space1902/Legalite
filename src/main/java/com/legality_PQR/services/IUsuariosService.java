@@ -16,6 +16,7 @@ public interface IUsuariosService {
 	public ResponseEntity<UsuariosResponseRest> GetUsuario(Long id);
 	public ResponseEntity<UsuariosResponseRest> GetUsuarios();
 	public ResponseEntity<UsuariosResponseRest> getCargo(Long cargo);
+	public ResponseEntity<UsuariosResponseRest> getValidarUsuario(String correo, String contraseña);
 	
 	
 }

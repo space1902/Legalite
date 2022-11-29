@@ -301,5 +301,41 @@ public class UsuariosServiceImpl implements IUsuariosService{
 		return new ResponseEntity<UsuariosResponseRest>(response, HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<UsuariosResponseRest> getValidarUsuario(String correo, String contraseña) {
+
+
+		UsuariosResponseRest response = new UsuariosResponseRest();
+		Usuarios list = new Usuarios();
+		String correo1 =  correo;
+		String contraseña2 = contraseña;
+		System.out.println("lleg esto " + correo + contraseña );
+		try {
+
+			List<Usuarios> searchId = usuarioDao.getValidar(correo1,contraseña2);
+
+			if(searchId.get(0).getContraseña() != null) {
+
+				System.out.println("lleg esto " + searchId);
+				response.getUsuarioResponse().setUsuarios(searchId);
+				response.setMetadata("Respuesta ok", "00", "Usuario encontrado");
+
+			}else {
+
+				response.setMetadata("Respuesta no ok", "-1", "Usuario no encontrado");
+				return new ResponseEntity<UsuariosResponseRest>(response, HttpStatus.NOT_FOUND);
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta no ok", "-1", "Error al iniciar sesion");
+			e.getStackTrace();
+			return new ResponseEntity<UsuariosResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<UsuariosResponseRest>(response, HttpStatus.OK);
+	}
+
 	
 }

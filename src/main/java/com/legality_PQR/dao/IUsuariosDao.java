@@ -1,6 +1,7 @@
 package com.legality_PQR.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -38,5 +39,13 @@ public interface IUsuariosDao extends JpaRepository<Usuarios, Long>{
 					+ "	where id_user = :id	",
 			nativeQuery = true)
 	List<Usuarios>  getUsuario(@Param("id") Long id);
+
+	@Query(
+			value =" select *"
+					+ "	from usuarios "
+					+ "	where correo = :email	"
+					+ " and contraseña = :password ",
+			nativeQuery = true)
+	List<Usuarios>  getValidar(@Param("email") String email, @Param("password") String password);
 
 }

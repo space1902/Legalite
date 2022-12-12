@@ -22,7 +22,7 @@ public interface IUsuariosDao extends JpaRepository<Usuarios, Long>{
 	@Query(
 			value =" select count(*)"
 					+ "	from usuarios "
-					+ "	where contraseña = :password	",
+					+ "	where password = :password	",
 			nativeQuery = true)
 	Integer validatePassword(@Param("password") String password);
 	
@@ -44,7 +44,7 @@ public interface IUsuariosDao extends JpaRepository<Usuarios, Long>{
 			value =" select *"
 					+ "	from usuarios "
 					+ "	where correo = :email	"
-					+ " and contraseña = :password ",
+					+ " and password = :password ",
 			nativeQuery = true)
 	List<Usuarios>  getValidar(@Param("email") String email, @Param("password") String password);
 

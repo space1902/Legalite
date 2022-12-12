@@ -29,7 +29,16 @@ public class PqrRestController {
 	@GetMapping("searchpqr/")
 	public ResponseEntity<PqrResponseRest> search(){
 		
-		ResponseEntity<PqrResponseRest> response = pqrService.search();
+		ResponseEntity<PqrResponseRest> response = pqrService.searchid();
+		
+		return response;
+		
+	}
+	
+	@GetMapping("searchpqr1/{id}/{nit}")
+	public ResponseEntity<PqrResponseRest> searchid(@PathVariable Long id, @PathVariable Long nit){
+		
+		ResponseEntity<PqrResponseRest> response = pqrService.searchid1(id, nit);
 		
 		return response;
 		
@@ -90,6 +99,15 @@ public class PqrRestController {
 		ResponseEntity<PqrResponseRest> response = pqrService.updateEstadoDevuelto(id);
 		
 		return response;
+	}
+	
+	@GetMapping("searchmypqr/{id}")
+	public ResponseEntity<PqrResponseRest> searchMyPqr(@PathVariable Long id){
+		
+		ResponseEntity<PqrResponseRest> response = pqrService.searchMyPqr(id);
+		
+		return response;
+		
 	}
 
 }

@@ -92,7 +92,7 @@ public class UsuariosServiceImpl implements IUsuariosService{
 				searchId.get().setGrupo(usuarios.getGrupo());
 				searchId.get().setNombre(usuarios.getNombre());
 				searchId.get().setNit(usuarios.getNit());
-				searchId.get().setContraseña(usuarios.getContraseña());
+				searchId.get().setPassword(usuarios.getPassword());
 				searchId.get().setCargo(usuarios.getCargo());
 				searchId.get().setDireccion(usuarios.getDireccion());
 
@@ -240,13 +240,13 @@ public class UsuariosServiceImpl implements IUsuariosService{
 
 			Optional<Usuarios> searchId = usuarioDao.findById(id);
 			Integer validateEm = usuarioDao.validateEmail(usuarios.getCorreo());
-			Integer validatePass = usuarioDao.validatePassword(usuarios.getContraseña());
+			Integer validatePass = usuarioDao.validatePassword(usuarios.getPassword());
 
 			if(searchId.isPresent() && validateEm == 1 && validatePass == 1) {
 
-				System.out.println("ver lo que llega" + usuarios.getNuevacontraseña()); 
+				System.out.println("ver lo que llega" + usuarios.getNuevapassword()); 
 
-				searchId.get().setContraseña(usuarios.getNuevacontraseña());
+				searchId.get().setPassword(null);
 
 				Usuarios usuarioSaved = usuarioDao.save(searchId.get());
 
@@ -314,9 +314,8 @@ public class UsuariosServiceImpl implements IUsuariosService{
 
 			List<Usuarios> searchId = usuarioDao.getValidar(correo1,contraseña2);
 
-			if(searchId.get(0).getContraseña() != null) {
+			if(searchId.get(0).getPassword() != null) {
 
-				System.out.println("lleg esto " + searchId);
 				response.getUsuarioResponse().setUsuarios(searchId);
 				response.setMetadata("Respuesta ok", "00", "Usuario encontrado");
 

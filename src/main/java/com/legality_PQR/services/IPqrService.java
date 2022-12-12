@@ -7,7 +7,8 @@ import com.legality_PQR.response.PqrResponseRest;
 
 public interface IPqrService {
 	
-	public ResponseEntity<PqrResponseRest> search();
+	public ResponseEntity<PqrResponseRest> searchid();
+	public ResponseEntity<PqrResponseRest> searchid1(Long id, Long nit);
 	public ResponseEntity<PqrResponseRest> updateIdAsesorUrgencia(Pqr pqr, Long id);
 	public ResponseEntity<PqrResponseRest> updatePqr(Pqr pqr, Long id);
 	public ResponseEntity<PqrResponseRest> searchId(Long id);
@@ -15,6 +16,7 @@ public interface IPqrService {
 	public ResponseEntity<PqrResponseRest> savePqr(Pqr pqr);
 	public ResponseEntity<PqrResponseRest> deletePqr(Long id);
 	public ResponseEntity<PqrResponseRest> updateEstadoDevuelto(Long id);
+	public ResponseEntity<PqrResponseRest> searchMyPqr(Long id);
 	
 
 }

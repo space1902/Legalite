@@ -38,5 +38,5 @@ public class Pqr implements Serializable{
     @Column(name="id_cliente")
     private Integer idCliente;
     @Column(name="id_asesor")
-    private Integer idAcesor;
+    private Integer idAsesor;
 }

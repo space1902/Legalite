@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.legality_PQR.dao.IPqrDao;
+import com.legality_PQR.dao.IUsuariosDao;
 import com.legality_PQR.model.Pqr;
 import com.legality_PQR.response.PqrResponseRest;
 
@@ -21,19 +22,51 @@ public class PqrServiceImpl implements IPqrService{
 	@Autowired
 	private IPqrDao pqrDao;
 
+	public PqrServiceImpl(IPqrDao pqrDao) {
+		this.pqrDao = pqrDao;
+	}
 	@Override
-	@Transactional(readOnly = true)
-	public ResponseEntity<PqrResponseRest> search() {
+	@Transactional
+	public ResponseEntity<PqrResponseRest> searchid() {
 
 		PqrResponseRest response = new PqrResponseRest();
-
+		long id = 1;
 		try {
+				List<Pqr> pqr = (List<Pqr>) pqrDao.findAll();
 
-			List<Pqr> pqr = (List<Pqr>) pqrDao.findAll();
+				response.getPqrResponse().setPqr(pqr);
+				response.setMetadata("Respuesta ok", "00", "Respuesta exitosa");
+				
+		} catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta no ok", "-1", "Respuesta no exitosa");
+			e.getStackTrace();
+			return new ResponseEntity<PqrResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-			response.getPqrResponse().setPqr(pqr);
-			response.setMetadata("Respuesta ok", "00", "Respuesta exitosa");
+		return new ResponseEntity<PqrResponseRest>(response, HttpStatus.OK);
+	}
+	
+	@Override
+	@Transactional
+	public ResponseEntity<PqrResponseRest> searchid1(Long id, Long nit) {
 
+		PqrResponseRest response = new PqrResponseRest();
+		try {
+			if(id != 3) {
+				List<Pqr> pqr = (List<Pqr>) pqrDao.findAll();
+
+				response.getPqrResponse().setPqr(pqr);
+				response.setMetadata("Respuesta ok", "00", "Respuesta exitosa");
+			}
+			else {
+
+				List<Pqr> pqr = (List<Pqr>) pqrDao.findMyPqr(nit);
+
+				response.getPqrResponse().setPqr(pqr);
+				response.setMetadata("Respuesta ok", "00", "Respuesta exitosa");
+			}
+				
 		} catch (Exception e) {
 			// TODO: handle exception
 			response.setMetadata("Respuesta no ok", "-1", "Respuesta no exitosa");
@@ -57,7 +90,7 @@ public class PqrServiceImpl implements IPqrService{
 
 			if(searchId.isPresent()) {
 
-				searchId.get().setIdAcesor(pqr.getIdAcesor());
+				searchId.get().setIdAsesor(pqr.getIdAsesor());
 				searchId.get().setUrgencia(pqr.getUrgencia());
 
 				Pqr pqrIdAsesorUrgencia = pqrDao.save(searchId.get());
@@ -279,11 +312,16 @@ public class PqrServiceImpl implements IPqrService{
 			Optional<Pqr> searchId = pqrDao.findById(id);
 
 			if(searchId.isPresent()) {
+				
+
+				System.out.println("lleg el asesor " + pqr.getIdAsesor() );
+				System.out.println("lleg el asesor " + pqr.getIdCliente() );
 
 				searchId.get().setAsunto(pqr.getAsunto());
 				searchId.get().setCliente(pqr.getCliente());
 				searchId.get().setIdCliente(pqr.getIdCliente());
 				searchId.get().setDescripcion(pqr.getDescripcion());
+				searchId.get().setIdAsesor(pqr.getIdAsesor());
 
 				Pqr pqrSaved = pqrDao.save(searchId.get());
 
@@ -311,6 +349,35 @@ public class PqrServiceImpl implements IPqrService{
 			response.setMetadata("Respuesta no ok", "-1", "Error al actualizar cliente");
 			e.getStackTrace();
 			return new ResponseEntity<PqrResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<PqrResponseRest>(response, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<PqrResponseRest> searchMyPqr(Long id) {
+
+		PqrResponseRest response = new PqrResponseRest();
+		List<Pqr> list = new ArrayList<>();
+
+		try {
+
+			List<Pqr> pqr = pqrDao.searchMyPqr(id);
+
+			if(pqr != null) {
+				list = pqr;
+				response.getPqrResponse().setPqr(list);
+				response.setMetadata("Respuesta ok", "00", "Pqr encontrada");
+			}else {
+
+				response.setMetadata("Respuesta no ok", "-1", "pqr no encontrada");
+				return new ResponseEntity<PqrResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta no ok", "-1", "Error al buscar la Pqr");
+			e.getStackTrace();
+			return new ResponseEntity<PqrResponseRest>(response, HttpStatus.NOT_FOUND);
 		}
 
 		return new ResponseEntity<PqrResponseRest>(response, HttpStatus.OK);

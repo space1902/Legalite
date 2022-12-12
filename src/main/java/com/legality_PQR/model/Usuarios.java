@@ -31,8 +31,8 @@ public class Usuarios {
 	@Column(name="nit")
 	private String nit;
 	private String nombre;
-	private String contraseña;
-	private String nuevacontraseña;
+	private String password;
+	private String nuevapassword;
 	private String correo;
 	private Integer cargo;
 	private String direccion;
